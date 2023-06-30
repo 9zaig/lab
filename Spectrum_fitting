@@ -1,0 +1,8 @@
+loop(num,2,n) #num을 2부터 n까지 반복
+{
+fitpeaks iy:=[Book1]Sheet1!(1,$(num)) np:=3  rt:=[Report]$(num-1)'> rd:=[Output]$(num-1)>;
+#Book1의 Sheet1 파일의 데이터를 사용
+#np: peak 수
+#rt: 피팅 레포트; 'Report' Workbook에 '$(num-1)' Worksheet로 저장
+#rd: 피팅 결과; 'Report' Workbook에 '$(num-1)' Worksheet로 저장
+};
