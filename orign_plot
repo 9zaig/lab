@@ -1,0 +1,7 @@
+loop(num,2,n){
+#num을 2부터 n까지 반복
+plotxy iy:=[Book1]Sheet1!(1,$(num)) plot:=200 ogl:=[Graph$(num-1)>];
+#1은 x축, (1,2) 그래프부터 (1,n) 그래프까지 생성
+#ogl:=['그래프 이름'>] 
+}
+#plot 200(Line), 201(Scatter), 202(Line, symbol)
