@@ -1,0 +1,14 @@
+loop(i,0,n){;
+#i를 0부터 n까지 반복
+    a=4*$(i)+2;
+    b=4*$(i)+3;
+    c=4*$(i)+4;
+    d=4*$(i)+5;
+    #4 단위로 반복되는 그래프일 경우
+#######################
+#a, b, c, d 함수를 한 그래프에 plot
+    plotxy iy:=[Book1]Sheet1!(1,$(a)) plot:=201 ogl:=[<new name:=$(i)>];
+    plotxy iy:=[Book1]Sheet1!(1,$(b)) plot:=200 color:=2 ogl:=[$(i)];
+    plotxy iy:=[Book1]Sheet1!(1,$(c)) plot:=200 ogl:=[$(i)];
+    plotxy iy:=[Book1]Sheet1!(1,$(d)) plot:=200 ogl:=[$(i)];
+}
