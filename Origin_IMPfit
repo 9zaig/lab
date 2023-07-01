@@ -1,0 +1,24 @@
+newbook name:=Book2;
+#피팅 결과를 넣을 Book2 생성; 
+col(A)[L]$=R1;
+col(B)[L]$=C1;
+col(C)[L]$=R2;
+col(D)[L]$=C2;
+col(E)[L]$=Rs;
+loop(i,1,23){
+#loop를 1부터 23까지 반복
+   plotxy iy:=[Book1]Sheet1!(1,$(i+1)) ogl:=[<new name:=Graph$(i)>];
+   layer.x.type=2;
+   nlbegin func:=IMPdoubleR nltree:=ParamTree;
+#func:='사용하는 피팅 function
+#Img 피팅 식 (-(((6.28)*x*r1*r1*c1)/(1+((39.44)*x*x*r1*r1*c1*c1))))+(-(((6.28)*x*r2*r2*c2)/(1+((39.44)*x*x*r2*r2*c2*c2))))
+   nlfit;
+   win -a Book2;
+   col(A)[$(i)]=$(ParamTree.r1);
+   col(B)[$(i)]=$(ParamTree.c1);
+   col(C)[$(i)]=$(ParamTree.r2);
+   col(D)[$(i)]=$(ParamTree.c2);
+   col(E)[$(i)]=$(ParamTree.rs);
+
+   nlend 1;
+}
