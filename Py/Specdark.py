@@ -1,11 +1,19 @@
 import pandas as pd
 import numpy as np
-doc=pd.read_excel('통합 문서2.xlsx')
+doc=pd.read_excel('./Input/통합 문서2.xlsx')
 # print(doc)
-point=doc.iloc[4,19]
-df1=pd.DataFrame(doc.iloc[4:54,12]) #50*1
-data_org=pd.DataFrame(doc.iloc[:,25:75]) #3195*50
 
+####################################
+#lowest peak intensity
+filtered_values = doc.iloc[:, 12].apply(pd.to_numeric, errors='coerce').dropna()
+filtered_values = filtered_values[filtered_values != 0]
+min_value = np.min(filtered_values)
+point=min_value
+####################################
+df1=pd.DataFrame(doc.iloc[:,12].dropna().iloc[1:]) #50*1
+# print(df1)
+data_org=pd.DataFrame(doc.iloc[:,19:]) #3195*50
+print(data_org)
 data = pd.DataFrame()
 
 ################################
