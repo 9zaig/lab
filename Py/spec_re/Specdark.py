@@ -1,10 +1,11 @@
 import pandas as pd
 import numpy as np
+import openpyxl
+from openpyxl.utils.dataframe import dataframe_to_rows
 import warnings
 warnings.filterwarnings("ignore")
-input='out.xlsx'
-input_file = "./Input/"+input
-output_file = "./Output/"+input+"_out.xlsx"
+input_file = 'out.xlsx'
+output_file = "out_out.xlsx"
 doc=pd.read_excel(input_file)
 # print(doc)
 
@@ -84,7 +85,56 @@ for column in data.columns:
             # print(datt_32)
             df[data[column].iloc[0]] = datt_32
 
-df.iloc[:, :] = df.iloc[:, :].applymap(lambda x: 0.5 if x <= 0 else x)
-
+df.iloc[:, :] = df.iloc[:, :].applymap(lambda x: 0.01 if x <= 0 else x)
 # print(df)
-df.to_excel(output_file)
+wave=df.iloc[:,0]
+data=df.iloc[:,1:]
+# print(data)
+numwave=len(wave)
+photonE=1240/wave
+photondf=pd.DataFrame(photonE).reset_index()
+meanlist=[]
+for column in data.columns:
+    # print(data[column].iloc[num-1])
+    list=[]
+    for a in range(numwave-2):
+        # print(a)
+        new_data=(photonE.iloc[a]-photonE.iloc[a+2])*0.5*(data[column].iloc[a]+data[column].iloc[a+2])
+        list.append(new_data)
+    res = [x * y for (x, y) in zip(photonE, list)]
+    # print(len(res))
+    # print(sum(res))
+    sumlist=sum(list)
+    a=sum(res)/sumlist
+    # print(a)
+    meanlist.insert(0,a)
+    list.insert(0,a)
+    list.insert(1,0)
+    # print(sumlist)
+    # print(list)
+    df2 = pd.DataFrame(list)
+    # print(df2)
+    photondf=pd.concat([photondf,df2],axis=1)
+    # df.columns=new_header
+photondf=photondf.iloc[:,1:]
+photondf.columns=df.columns
+# print(photondf)
+# print(meanlist)
+mean=pd.DataFrame(meanlist)
+# print(mean)
+avg =pd.DataFrame([1240/x for x in meanlist])
+# print(avg)
+res=pd.concat([avg,mean],axis=1)
+# print(res)
+workbook = openpyxl.load_workbook(input_file)
+worksheet = workbook['Sheet1']
+for r_idx, row in enumerate(res.values, 6):  # 6행부터 시작 (G6 셀)
+    for c_idx, value in enumerate(row, 14):  # G열부터 시작
+        cell = worksheet.cell(row=r_idx, column=c_idx, value=value)
+new_sheet = workbook.create_sheet('Sheet2')
+worksheet = workbook['Sheet2']
+for row in dataframe_to_rows(photondf, index=False, header=True):
+    worksheet.append(row)
+
+workbook.save('out_out.xlsx')
+workbook.close()
