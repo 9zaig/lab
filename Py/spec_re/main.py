@@ -45,7 +45,7 @@ for column in data.columns:
     hu=1240/peak
     # print(hu)
     peak_intensity=0
-    if peak > 450:
+    if peak > 400:
         peak_intensity=data[column].max()
     # print(data[column].iloc[256])
     integ=''
