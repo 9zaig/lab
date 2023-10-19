@@ -2,7 +2,7 @@ import pandas as pd
 import openpyxl
 from openpyxl.utils.dataframe import dataframe_to_rows
 import numpy as np
-input='specdata.xlsx'
+input='./In/specdata.xlsx'
 import warnings
 warnings.filterwarnings("ignore")
 # output_file ="specout.xlsx"
@@ -77,7 +77,7 @@ for r_idx, row in enumerate(ans.values, 6):  # 6행부터 시작 (G6 셀)
         cell = worksheet.cell(row=r_idx, column=c_idx, value=value)
 
 # 변경 사항을 엑셀 파일에 저장
-workbook.save('out.xlsx')
+workbook.save('./out/out.xlsx')
 
 # 엑셀 파일 닫기
 workbook.close()

@@ -4,8 +4,7 @@ import openpyxl
 from openpyxl.utils.dataframe import dataframe_to_rows
 import warnings
 warnings.filterwarnings("ignore")
-input_file = 'out.xlsx'
-output_file = "out_out.xlsx"
+input_file = './out/out.xlsx'
 doc=pd.read_excel(input_file)
 # print(doc)
 
@@ -25,7 +24,7 @@ data = pd.DataFrame()
 
 #dark 위치 찾기
 count_zero = (df1 == 0).sum()
-print("0의 개수:", count_zero)
+# print("0의 개수:", count_zero)
 dark=data_org.iloc[:,count_zero]
 # print(dark)
 # ################################
@@ -87,12 +86,13 @@ for column in data.columns:
             df[data[column].iloc[0]] = datt_32
 #
 df.iloc[:, :] = df.iloc[:, :].applymap(lambda x: 0.01 if x <= 0 else x)
-print(df)
+# print(df)
 wave=df.iloc[:,0]
 data=df.iloc[:,1:]
 # print(data)
 numwave=len(wave)
 photonE=1240/wave
+# print(photonE)
 photondf=pd.DataFrame(photonE).reset_index()
 meanlist=[]
 for column in data.columns:
@@ -108,7 +108,7 @@ for column in data.columns:
     sumlist=sum(list)
     a=sum(res)/sumlist
     # print(a)
-    meanlist.insert(0,a)
+    meanlist.insert(len(meanlist),a)
     list.insert(0,a)
     list.insert(1,0)
     # print(sumlist)
@@ -122,7 +122,7 @@ photondf.columns=df.columns
 # print(photondf)
 # print(meanlist)
 mean=pd.DataFrame(meanlist)
-# print(mean)
+print(mean)
 avg =pd.DataFrame([1240/x for x in meanlist])
 # print(avg)
 res=pd.concat([avg,mean],axis=1)
@@ -137,5 +137,5 @@ worksheet = workbook['Sheet2']
 for row in dataframe_to_rows(photondf, index=False, header=True):
     worksheet.append(row)
 
-workbook.save('out_out.xlsx')
+workbook.save('./out/out_out.xlsx')
 workbook.close()
