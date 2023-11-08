@@ -89,6 +89,7 @@ df.iloc[:, :] = df.iloc[:, :].applymap(lambda x: 0.01 if x <= 0 else x)
 # print(df)
 wave=df.iloc[:,0]
 data=df.iloc[:,1:]
+data1=pd.concat([wave,data],axis=1)
 # print(data)
 numwave=len(wave)
 photonE=1240/wave
@@ -134,6 +135,10 @@ for r_idx, row in enumerate(res.values, int(count_zero)+7):
         cell = worksheet.cell(row=r_idx, column=c_idx, value=value)
 new_sheet = workbook.create_sheet('Sheet2')
 worksheet = workbook['Sheet2']
+for row in dataframe_to_rows(data1, index=False, header=True):
+    worksheet.append(row)
+new_sheet = workbook.create_sheet('Sheet3')
+worksheet = workbook['Sheet3']
 for row in dataframe_to_rows(photondf, index=False, header=True):
     worksheet.append(row)
 
