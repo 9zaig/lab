@@ -124,7 +124,7 @@ photondf.columns=df.columns
 # print(photondf)
 # print(meanlist)
 mean=pd.DataFrame(meanlist)
-print(mean)
+# print(mean)
 avg =pd.DataFrame([1240/x for x in meanlist])
 # print(avg)
 res=pd.concat([avg,mean],axis=1)

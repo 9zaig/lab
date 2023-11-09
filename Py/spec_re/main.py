@@ -30,7 +30,7 @@ photonE=1240/wave
 photondf=pd.DataFrame(photonE).reset_index()
 # print(wave)
 data=secba.iloc[:,1:]
-print(data)
+# print(data)
 # print(data.columns)
 # print(data.idxmax())
 
