@@ -4,7 +4,7 @@ import openpyxl
 from openpyxl.utils.dataframe import dataframe_to_rows
 import warnings
 warnings.filterwarnings("ignore")
-input_file = './out/out.xlsx'
+input_file = './out/1st.xlsx'
 doc=pd.read_excel(input_file)
 # print(doc)
 
@@ -142,5 +142,5 @@ worksheet = workbook['Sheet3']
 for row in dataframe_to_rows(photondf, index=False, header=True):
     worksheet.append(row)
 
-workbook.save('./out/out_out.xlsx')
+workbook.save('./out/2nd.xlsx')
 workbook.close()

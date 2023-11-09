@@ -77,7 +77,7 @@ for r_idx, row in enumerate(ans.values, 6):  # 6행부터 시작 (G6 셀)
         cell = worksheet.cell(row=r_idx, column=c_idx, value=value)
 
 # 변경 사항을 엑셀 파일에 저장
-workbook.save('./out/out.xlsx')
+workbook.save('./out/1st.xlsx')
 
 # 엑셀 파일 닫기
 workbook.close()
