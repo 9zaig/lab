@@ -58,7 +58,7 @@ for column in data.columns:
         currentdensity=current/cheapsize
     df=pd.DataFrame([current,currentdensity,0,integ,hu,peak,peak_intensity]).T
     # print(df)
-    ans=ans.append(df)
+    ans=ans._append(df)
     # pd.concat([ans,df],axis=0)
     # print(hu)
     # print(peak)
