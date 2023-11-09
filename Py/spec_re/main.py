@@ -2,6 +2,7 @@ import pandas as pd
 import openpyxl
 from openpyxl.utils.dataframe import dataframe_to_rows
 import numpy as np
+print("Running main.py")
 input='./In/specdata.xlsx'
 import warnings
 warnings.filterwarnings("ignore")

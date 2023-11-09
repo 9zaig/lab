@@ -4,6 +4,7 @@ import openpyxl
 from openpyxl.utils.dataframe import dataframe_to_rows
 import warnings
 warnings.filterwarnings("ignore")
+print("Running Specdark.py")
 input_file = './out/1st.xlsx'
 doc=pd.read_excel(input_file)
 # print(doc)
