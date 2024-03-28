@@ -3,6 +3,7 @@ import numpy as np
 import openpyxl
 from openpyxl.utils.dataframe import dataframe_to_rows
 import warnings
+# import main
 warnings.filterwarnings("ignore")
 print("Running Specdark.py")
 input_file = './out/1st.xlsx'
@@ -12,8 +13,9 @@ doc=pd.read_excel(input_file)
 ####################################
 #lowest peak intensity
 filtered_values = doc.iloc[:, 12].apply(pd.to_numeric, errors='coerce').dropna()
+# print(filtered_values)
 filtered_values = filtered_values[filtered_values != 0]
-min_value = np.min(filtered_values)
+min_value = np.min(filtered_values) #peak intensity 최소값
 point=min_value
 # print(point)
 # ####################################
@@ -28,42 +30,40 @@ count_zero = (df1 == 0).sum()
 # print("0의 개수:", count_zero)
 dark=data_org.iloc[:,count_zero]
 # print(dark)
-# ################################
+################################
 for col in doc.columns[25:]:
     # print(doc[col])
 
     column_data= doc[col]
-
-
-    # column_data = df.iloc[2:,col]
-    # print(column_data)
     max_value = column_data.max()
 
 
     if max_value > point:
         data[col] = column_data
 # max 최대값 넘는지 안넘는지
-# print(data)
-# ###########################################
+# print(data) #dark를 제거한 dataframe
+###########################################
 counts = data.iloc[1].value_counts()
 counts = counts.sort_index(ascending=False)
 # print(counts)
 counts_all=np.cumsum(counts)
+# print(counts_all)
+### integration time 정렬
+############
 df=pd.DataFrame()
-wave=pd.DataFrame(doc.iloc[2:,24])
+wave=pd.DataFrame(doc.iloc[2:,24]) #파장
 df['Wavelength']=wave
 # print(wave)
-#
 for column in data.columns:
     if data[column].iloc[1]==counts.index[0]:
         # print(data[column])
         # print(dark.iloc[2:,0])
         datt=data[column].iloc[2:]-dark.iloc[2:,0]
         df[data[column].iloc[0]]=datt
-
+#
     elif data[column].iloc[1]==counts.index[1]:
-        # print(data.iloc[:,counts_all.iloc[0]])
-        # print(df.iloc[:,counts_all.iloc[0]-1])
+        # print(data.iloc[:,counts_all.iloc[0]]) #integration time이 1보다 큰, 가장 작은 전류일 때 데이터
+        # print(df.iloc[:,counts_all.iloc[0]-1]) #integfration time이 1인, 가장 큰 전류일 때 데이터
         datt_21=data[column].iloc[2:]-df.iloc[:,counts_all.iloc[0]-1]
         # print(datt_21)
         mean_values = datt_21[:50].mean()
@@ -143,5 +143,5 @@ worksheet = workbook['Sheet3']
 for row in dataframe_to_rows(photondf, index=False, header=True):
     worksheet.append(row)
 
-workbook.save('./out/2nd.xlsx')
-workbook.close()
+# workbook.save('./out/test.xlsx')
+# workbook.close()
