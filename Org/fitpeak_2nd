@@ -2,5 +2,7 @@ loop(num,2,3)
 {
 plotxy iy:=[Book1]Sheet1!(1,$(num)) plot:=200 ogl:=[Graph$(num-1)>];
 fitpeaks np:=3  rt:=[Report]$(num)'> rd:=[Output]$(num)>;
-
+layer.x.type=0;
+layer.x.from = 450;
+layer.x.to = 600;
 };
